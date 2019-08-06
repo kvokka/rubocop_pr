@@ -43,7 +43,7 @@ module Rubopop
         end
       end
 
-      parser.parse!(@args)
+      @parser.parse!(@args)
 
       @options
     end

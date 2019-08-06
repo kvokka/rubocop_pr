@@ -10,7 +10,7 @@ cli = Rubopop::CLI.new
 result = 0
 
 time = Benchmark.realtime do
-  result = cli.run
+  result = cli.run(ARGV)
 end
 
 puts "Finished in #{time} seconds" if cli.options[:debug]

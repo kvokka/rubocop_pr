@@ -10,7 +10,7 @@ module Rubopop
   class Error < StandardError; end
 
 
-  def run(args = ARGV)
+  def run(args = [])
     @options = Options.new(args).parse!
 
     verify_hub_version(@options.hub_version)
