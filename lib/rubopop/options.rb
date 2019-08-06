@@ -26,6 +26,7 @@ module Rubopop
         add_post_checkout_option(opts)
         add_limit_option(opts)
         add_debug_option(opts)
+        add_repository_option(opts)
         add_on_tail(opts)
       end
     end
@@ -63,9 +64,17 @@ module Rubopop
 
     def add_hub_version_option(opts)
       @options.hub_version = HUB_VERSION
-      msg = "Set manually minimum required version of 'hub' utility (default: #{HUB_VERSION})"
+      msg = "Set manually minimum required version of 'hub' utility for github (default: #{HUB_VERSION})"
       opts.on('-u [version] ', '--hub-version [version]', msg) do |v|
         @options.hub_version = v
+      end
+    end
+
+    def add_repository_option(opts)
+      @options.repository = 'github'
+      msg = 'Set repository host (default: github)'
+      opts.on('-g [name] ', '--repository [name]', msg) do |v|
+        @options.repository = v
       end
     end
 

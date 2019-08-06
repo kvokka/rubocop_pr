@@ -12,6 +12,7 @@ module Rubopop
       subject { described_class.new([]).parse.to_h }
 
       it('hub_version') { is_expected.to have_key :hub_version }
+      it('repository') { is_expected.to have_key :repository }
       it('rubocop_todo_branch') { is_expected.to have_key :rubocop_todo_branch }
       it('post_checkout') { is_expected.to have_key :post_checkout }
       it('limit') { is_expected.to have_key :limit }

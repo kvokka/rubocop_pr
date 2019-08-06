@@ -6,7 +6,9 @@ module Rubopop
     def run(args = [])
       @options = Options.new(args).parse!
 
-      EnvironmentChecker.call(@options)
+      @repository = Repository.all.fetch(@options.repository)
+
+      EnvironmentChecker.call(@repository, @options)
     end
   end
 end
