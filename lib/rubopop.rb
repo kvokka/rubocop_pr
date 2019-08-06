@@ -1,10 +1,10 @@
-require "rubocop_on_github/version"
-require "rubocop_on_github/options"
+require "rubopop/version"
+require "rubopop/options"
 
 require 'optparse'
 require 'ostruct'
 
-module RubocopOnGithub
+module Rubopop
   class Error < StandardError; end
 
 

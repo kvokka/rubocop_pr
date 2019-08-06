@@ -1,5 +1,5 @@
 require "bundler/setup"
-require "rubocop_on_github"
+require "rubopop"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

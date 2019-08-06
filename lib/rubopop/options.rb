@@ -1,4 +1,4 @@
-module RubocopOnGithub
+module Rubopop
   class Options
     attr_reader :options
 

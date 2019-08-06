@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    rubocop_on_github (0.1.0)
+    rubopop (0.1.0)
 
 GEM
   remote: https://rubygems.org/
@@ -29,7 +29,7 @@ DEPENDENCIES
   bundler (~> 1.17)
   rake (~> 10.0)
   rspec (~> 3.0)
-  rubocop_on_github!
+  rubopop!
 
 BUNDLED WITH
    1.17.3

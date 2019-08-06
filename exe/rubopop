@@ -3,10 +3,10 @@
 
 $LOAD_PATH.unshift("#{__dir__}/../lib")
 
-require 'rubocop_on_github'
+require 'rubopop'
 require 'benchmark'
 
-cli = RubocopOnGithub::CLI.new
+cli = Rubopop::CLI.new
 result = 0
 
 time = Benchmark.realtime do

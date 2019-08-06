@@ -1,17 +1,17 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "rubocop_on_github/version"
+require "rubopop/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "rubocop_on_github"
-  spec.version       = RubocopOnGithub::VERSION
+  spec.name          = "rubopop"
+  spec.version       = Rubopop::VERSION
   spec.authors       = ["kvokka"]
   spec.email         = ["kvokka@yahoo.com"]
 
   spec.summary       = %q{Quick & clean Rubocop introduction.}
   spec.description   = %q{Create 1 PR per 1 Rubocop linter, which allow to do review rubocop changes smoothly.}
-  spec.homepage      = "https://github.com/kvokka/rubocop_on_github"
+  spec.homepage      = "https://github.com/kvokka/rubopop"
   spec.license       = "MIT"
 
   spec.required_ruby_version = '~> 2.1'
