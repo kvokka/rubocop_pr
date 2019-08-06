@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
 require 'optparse'
 require 'ostruct'
 
 require 'pry'
 
-require "rubopop/version"
-require "rubopop/options"
+require 'rubopop/version'
+require 'rubopop/options'
 
+# The entry point
 module Rubopop
   class Error < StandardError; end
 
+  HUB_VERSION = '2.12.3'.freeze
 
   def run(args = [])
     @options = Options.new(args).parse!
@@ -22,8 +26,9 @@ module Rubopop
     matches = `hub  --version`.match(/hub version (?<hub_version>(.*))/)
     installed_version = Gem::Version.new matches.fetch('hub_version')
     return true if installed_version >= Gem::Version.new(version)
-    warn 'Script was tested with hub version #{HUB_VERSION}'
-  rescue => e
+
+    warn "Script was tested with hub version #{HUB_VERSION}"
+  rescue StandardError => e
     raise ['Script requires https://github.com/github/hub', e.message].join("\n")
   end
 end
