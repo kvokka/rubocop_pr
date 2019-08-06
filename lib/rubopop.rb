@@ -1,8 +1,10 @@
-require "rubopop/version"
-require "rubopop/options"
-
 require 'optparse'
 require 'ostruct'
+
+require 'pry'
+
+require "rubopop/version"
+require "rubopop/options"
 
 module Rubopop
   class Error < StandardError; end
