@@ -1,0 +1,62 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'ostruct'
+
+class CreateRubocopPrs
+  attr_reader ::options
+
+  def initialize(args)
+    @args = args
+  end
+
+  def parse_options # rubocop:disable Metrics/MethodLength
+    @options = OpenStruct.new
+
+    @parser = OptionParser.new do |opts|
+      opts.banner = 'Usage: create_rubocop_prs [options]'
+
+      @options.hub_version = '2.12.3'
+      opts.on('-u [version] ','--hub-version [version]', 'Set minimum required version of `hub` utility') do |v|
+        @options.hub_version = v
+      end
+
+      @options.rubocop_todo_branch = 'rubocop_todo_branch'
+      opts.on('-b [branch]', '--branch [branch]', String, 'internal branch with `.rubocop_todo.yml` (default `rubocop_todo_branch`)') do |v|
+        @options.rubocop_todo_branch = v
+      end
+
+      @options.post_checkout = ''
+      opts.on('-r [command]', '--post-checkout [command]', String, 'Running after each git checkout (default "")') do |v|
+        @options.seats = v
+      end
+
+      @options.limit = 10
+      opts.on('-t [limit]', '--limit [limit]', Integer, "Limit the PS's for one run") do |v|
+        @options.limit = v
+      end
+
+      opts.on_tail('-h', '--help', 'Display help') do
+        puts opts
+        exit
+      end
+    end
+
+    parser.parse!(@args)
+
+    verify_hub_version(@options.hub_version)
+
+    @options
+  end
+
+  def verify_hub_version(version)
+    matches = `hub  --version`.match(/hub version (?<hub_version>(.*))/)
+    installed_version = Gem::Version.new matches.fetch('hub_version')
+    return true if installed_version >= Gem::Version.new(version)
+    warn 'Script was tested with hub version #{HUB_VERSION}'
+  rescue => e
+    raise ['Script requires https://github.com/github/hub', e.message].join("\n")
+  end
+end
+
+CreateRubocopPrs.new(ARGV).run
