@@ -5,6 +5,7 @@ module Rubopop
   class EnvironmentChecker
     def self.call(options)
       VerifyHubVersion.call(options)
+      GitStatus.call(options)
     end
 
     # Check, if `hub` installed and have right version
@@ -26,6 +27,20 @@ module Rubopop
 
       def hub_version
         `hub  --version`
+      end
+    end
+
+    # Check that we do not have any un-commited changes
+    module GitStatus
+      module_function
+
+      def call(*)
+        return true if git_status.empty?
+        raise 'You have un-commited changes in this branch'
+      end
+
+      def git_status
+        `git status -s`
       end
     end
   end
