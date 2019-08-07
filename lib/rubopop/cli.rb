@@ -6,7 +6,7 @@ module Rubopop
     attr_reader :options, :repository
 
     def initialize(argv = [])
-      @options = Options.new(argv).parse!
+      @options = Options.new(argv).parse
       @repository = Repository.all.fetch(@options.repository)
     end
 
@@ -18,8 +18,9 @@ module Rubopop
     private
 
     def run
-      Git.checkout(options.rubocop_todo_branch)
-      Rubopop::Rubocop.todo
+      Rubopop::Rubocop.each(in_branch: options.rubocop_todo_branch) do |_cop|
+        next if Git.status.blank?
+      end
     end
   end
 end
