@@ -28,6 +28,7 @@ module Rubopop
         add_limit_option(opts)
         add_repository_option(opts)
         add_git_origin_option(opts)
+        add_version_option(opts)
         add_on_tail(opts)
       end
     end
@@ -85,6 +86,13 @@ module Rubopop
       msg = 'Set repository host (default: github)'
       opts.on('-g [name] ', '--repository [name]', msg) do |v|
         @options.repository = v
+      end
+    end
+
+    def add_version_option(opts)
+      opts.on('-v', '--version', 'Display version') do
+        puts Rubopop::VERSION
+        exit
       end
     end
 
