@@ -22,7 +22,7 @@ module Rubopop
       end
 
       def git_status
-        `git status -s`
+        Rubopop::Git.status
       end
     end
   end
