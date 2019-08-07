@@ -22,7 +22,7 @@ module Rubopop
       end
 
       def git_status
-        Rubopop::Git.status
+        Rubopop::Git.new.status
       end
     end
   end
