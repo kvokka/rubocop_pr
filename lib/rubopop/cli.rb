@@ -32,7 +32,7 @@ module Rubopop
       git.checkout(options.master_branch)
       title = "Fix Rubocop #{cop} warnings"
       issue_number = repository.create_issue(title: title)
-      git.checkout("#{issue_number}-rubocop-fix-#{cop.underscore.tr('/', '-')}")
+      git.checkout("#{issue_number}-rubocop-fix-#{cop.underscore.tr('/_', '-')}")
       git.commit_all(title)
       git.push(options.git_origin)
       repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
