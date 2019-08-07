@@ -1,0 +1,93 @@
+verify_signatures: false
+CommitMsg:
+  ALL:
+  CapitalizedSubject:
+    enabled: true
+    description: 'Checking subject capitalization'
+    quiet: true
+    on_warn: fail
+  EmptyMessage:
+    enabled: true
+    description: 'Checking for empty commit message'
+    quiet: true
+  HardTabs:
+    enabled: true
+    description: 'Checking for hard tabs'
+  RussianNovel:
+    enabled: true
+    description: 'Checking length of commit message'
+    quiet: true
+  SingleLineSubject:
+    enabled: true
+    description: 'Checking subject line'
+  SpellCheck:
+    enabled: true
+    description: 'Checking for misspelled words'
+    required_executable: 'hunspell'
+    flags: ['-a']
+    on_fail: warn
+  TextWidth:
+    enabled: true
+    description: 'Checking text width'
+    max_subject_width: 60
+    max_body_width: 72
+    on_warn: fail
+  TrailingPeriod:
+    enabled: true
+    description: 'Checking for trailing periods in subject'
+    on_warn: fail
+  MessageFormat:
+    enabled: false
+    description: 'Message must be ended with task number'
+    expected_pattern_message: '<Commit Message Description> <Issue Id>'
+    sample_message: 'Refactored Onboarding flow FOO-1234'
+    pattern: '\s([A-Z]{1,4}-\d{1,4}|\d{1,6})$'
+PreCommit:
+  ALL:
+    problem_on_unmodified_line: report
+    requires_files: true
+    required: false
+    quiet: false
+  AuthorEmail:
+    enabled: true
+    description: 'Checking author email'
+    requires_files: false
+    required: true
+    quiet: true
+    pattern: '^[^@]+@.*$'
+  AuthorName:
+    enabled: false
+    description: 'Checking for author name'
+    requires_files: false
+    required: true
+    quiet: true
+  BrokenSymlinks:
+    enabled: true
+    description: 'Checking for broken symlinks'
+    quiet: true
+  CaseConflicts:
+    enabled: true
+    description: 'Checking for case-insensitivity conflicts'
+    quiet: true
+  MergeConflicts:
+    enabled: true
+    description: 'Checking for merge conflicts'
+    quiet: true
+    required_executable: 'grep'
+    flags: ['-IHn', "^<<<<<<<[ \t]"]
+
+  RuboCop:
+    enabled: true
+    required: true
+    quiet: false
+    description: 'Analyzing with RuboCop'
+    command: ['bundle', 'exec', 'rubocop']
+    flags: ['--format=emacs', '--force-exclusion', '--display-cop-names']
+    install_command: 'gem install rubocop'
+    on_warn: fail
+    include:
+      - '**/*.gemspec'
+      - '**/*.rake'
+      - '**/*.rb'
+      - '**/Gemfile'
+      - '**/Rakefile'
