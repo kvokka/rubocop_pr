@@ -7,6 +7,7 @@ module Rubopop
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
         allow(Git).to receive(:checkout)
         allow(Git).to receive(:commit_all)
+        allow(Git).to receive(:status)
         allow(File).to receive(:open)
       end
 
