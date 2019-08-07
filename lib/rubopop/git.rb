@@ -15,7 +15,7 @@ module Rubopop
 
     def commit_all(message)
       system 'git add .'
-      system "git commit -m #{message}"
+      system "git commit -m '#{message}'"
     end
 
     def push(origin)
