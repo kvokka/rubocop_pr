@@ -17,13 +17,13 @@ module Rubopop
           allow(subject).to receive(:generate_todo)
           allow(File).to receive(:exist?)
           allow(File).to receive(:read).and_return('')
-          allow(Git).to receive(:commit_all)
+          allow(subject.git).to receive(:commit_all)
         end
 
         it('generate todo file') do
           subject.todo
           expect(subject).to have_received(:generate_todo)
-          expect(Git).to have_received(:commit_all)
+          expect(subject.git).to have_received(:commit_all)
         end
       end
     end

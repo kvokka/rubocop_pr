@@ -5,10 +5,11 @@ module Rubopop
 
     TODO_FILENAME = '.ruby-rubocop.yml'.freeze
 
-    attr_reader :branch
+    attr_reader :branch, :git
 
     def initialize(**options)
       @branch = options.delete(:branch)
+      @git = options.delete(:git)
     end
 
     def todo
@@ -16,13 +17,13 @@ module Rubopop
     end
 
     def each # rubocop:disable  Metrics/AbcSize
-      Git.checkout(branch) if branch
+      git.checkout(branch) if branch
       todos = todo
       todos.each_key do |cop|
-        Git.checkout(branch) if branch
+        git.checkout(branch) if branch
         todos.delete cop
         File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
-        Git.commit_all("Remove Rubocop #{cop} from todo")
+        git.commit_all("Remove Rubocop #{cop} from todo")
         autofix
         yield cop
       end
@@ -31,7 +32,7 @@ module Rubopop
     def read_or_generate_todo
       return File.read(TODO_FILENAME) if File.exist?(TODO_FILENAME)
       generate_todo
-      Git.commit_all('Generate initial Rubocop todo file')
+      git.commit_all('Generate initial Rubocop todo file')
       File.read(TODO_FILENAME)
     end
 
