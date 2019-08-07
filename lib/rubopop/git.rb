@@ -16,6 +16,14 @@ module Rubopop
         `git add .`
         `git commit -m #{message}`
       end
+
+      def push(origin)
+        `git push --set-upstream #{origin} #{current_branch}`
+      end
+
+      def current_branch
+        `git branch --show-current`.chomp
+      end
     end
   end
 end

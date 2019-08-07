@@ -16,6 +16,7 @@ module Rubopop
       it('rubocop_todo_branch') { is_expected.to have_key :rubocop_todo_branch }
       it('master_branch') { is_expected.to have_key :master_branch }
       it('post_checkout') { is_expected.to have_key :post_checkout }
+      it('git_origin') { is_expected.to have_key :git_origin }
       it('limit') { is_expected.to have_key :limit }
       it('debug') { is_expected.to have_key :debug }
     end

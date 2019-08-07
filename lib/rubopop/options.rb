@@ -28,6 +28,7 @@ module Rubopop
         add_limit_option(opts)
         add_debug_option(opts)
         add_repository_option(opts)
+        add_git_origin_option(opts)
         add_on_tail(opts)
       end
     end
@@ -68,6 +69,14 @@ module Rubopop
       msg = "branch which will be the base for all PR's (default: 'master')"
       opts.on('-m [branch]', '--master [branch]', String, msg) do |v|
         @options.master_branch = v
+      end
+    end
+
+    def add_git_origin_option(opts)
+      @options.git_origin = 'origin'
+      msg = "origin option for 'git push' (default: 'origin')"
+      opts.on('-o [origin]', '--origin [origin]', String, msg) do |v|
+        @options.git_origin = v
       end
     end
 

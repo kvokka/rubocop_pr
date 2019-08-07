@@ -8,6 +8,7 @@ module Rubopop
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
         allow(Git).to receive(:checkout)
         allow(Git).to receive(:commit_all)
+        allow(Git).to receive(:push)
         allow(subject.repository).to receive(:create_pull_request)
         allow(subject.repository).to receive(:create_issue)
         allow(File).to receive(:open)
@@ -38,6 +39,10 @@ module Rubopop
         it 'do not create pull_request' do
           expect(subject.repository).not_to have_received(:create_pull_request)
         end
+
+        it 'do not push any branches' do
+          expect(Git).not_to have_received(:push)
+        end
       end
 
       context 'lint both' do
@@ -46,8 +51,8 @@ module Rubopop
           subject.run!
         end
 
-        it 'one checkout on the start + 2 for todo file + 2 for lints' do
-          expect(Git).to have_received(:checkout).exactly(5).times
+        it 'one checkout on the start + 2 for todo file + 2 for lints + 2 times for the new branch' do
+          expect(Git).to have_received(:checkout).exactly(7).times
         end
 
         it 'commit 2 rubocop todo updates + 2 lint updates' do
@@ -64,6 +69,10 @@ module Rubopop
 
         it 'create 2 pull_request' do
           expect(subject.repository).to have_received(:create_pull_request).exactly(2).times
+        end
+
+        it 'pushed 2 branches' do
+          expect(Git).to have_received(:push).exactly(2).times
         end
       end
     end

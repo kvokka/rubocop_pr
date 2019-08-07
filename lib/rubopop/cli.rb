@@ -20,12 +20,13 @@ module Rubopop
 
     def run
       rubocop.each do |cop|
-        rubocop.autofix
         next if Git.status.blank?
         Git.checkout(options.master_branch)
         title = "Fix Rubocop #{cop} warnings"
-        Git.commit_all(title)
         issue_number = repository.create_issue(title: title)
+        Git.checkout("#{issue_number}-rubocop-fix-#{cop.underscore.tr('/', '-')}")
+        Git.commit_all(title)
+        Git.push(options.git_origin)
         repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
       end
     end

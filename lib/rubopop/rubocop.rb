@@ -23,6 +23,7 @@ module Rubopop
         todos.delete cop
         File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
         Git.commit_all("Remove Rubocop #{cop} from todo")
+        autofix
         yield cop
       end
     end
