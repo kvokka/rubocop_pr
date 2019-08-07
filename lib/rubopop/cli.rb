@@ -18,8 +18,11 @@ module Rubopop
     private
 
     def run
-      Rubopop::Rubocop.each(in_branch: options.rubocop_todo_branch) do |_cop|
+      Rubopop::Rubocop.each(in_branch: options.rubocop_todo_branch) do |cop|
+        Rubopop::Rubocop.autofix
         next if Git.status.blank?
+        Git.checkout(options.master_branch)
+        Git.commit_all("Fix Rubocop #{cop}")
       end
     end
   end

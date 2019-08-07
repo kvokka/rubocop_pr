@@ -8,25 +8,16 @@ module Rubopop
         YAML.safe_load(read_or_generate_todo)
       end
 
-      def pop_todo
-        todos = todo
-        return YAML.dump('') unless todos.first
-        element = todos.delete todos.keys.first
-        File.open(TODO_FILENAME, 'w') { |f| f.write YAML.parse(todos) }
-        element
-      end
-
       def each(in_branch: nil)
         Git.checkout(in_branch) if in_branch
         todos = todo
         todos.each_key do |cop|
           Git.checkout(in_branch) if in_branch
           todos.delete cop
-          File.open(TODO_FILENAME, 'w') { |f| f.write YAML.parse(todos) }
+          File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
           Git.commit_all("Remove Rubocop #{cop} from todo")
           yield cop
         end
-        File.open(TODO_FILENAME, 'w') { |f| f.write YAML.dump('') }
       end
 
       def read_or_generate_todo
@@ -37,6 +28,10 @@ module Rubopop
 
       def generate_todo
         `bundle exec rubocop --auto-gen-config`
+      end
+
+      def autofix
+        `bundle exec rubocop -a`
       end
     end
   end

@@ -17,12 +17,13 @@ module Rubopop
 
     private
 
-    def build_parser
+    def build_parser # rubocop:disable Metrics/MethodLength
       @parser = OptionParser.new do |opts|
         opts.banner = 'Usage: rubopop [options]'
 
         add_hub_version_option(opts)
         add_rubocop_todo_branch_option(opts)
+        add_master_branch_option(opts)
         add_post_checkout_option(opts)
         add_limit_option(opts)
         add_debug_option(opts)
@@ -59,6 +60,14 @@ module Rubopop
       msg = "internal branch with '.rubocop_todo.yml' (default: 'rubocop_todo_branch')"
       opts.on('-b [branch]', '--branch [branch]', String, msg) do |v|
         @options.rubocop_todo_branch = v
+      end
+    end
+
+    def add_master_branch_option(opts)
+      @options.master_branch = 'master'
+      msg = "branch which will be the base for all PR's (default: 'master')"
+      opts.on('-m [branch]', '--master [branch]', String, msg) do |v|
+        @options.master_branch = v
       end
     end
 
