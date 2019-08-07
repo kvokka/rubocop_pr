@@ -6,13 +6,28 @@ module Rubopop
       class Issue
         attr_reader :title, :body
 
-        def initialize(title:, body:, **_other)
+        def initialize(title:, **other)
           @title = title
-          @body = body
+          @body = other[:body] || ''
         end
 
         def create
           link = `hub issue create -m #{title} -m #{body}`
+          link.split('/').last.to_i
+        end
+      end
+
+      # The representation of the PR
+      class PullRequest
+        attr_reader :title, :body
+
+        def initialize(title:, **other)
+          @title = title
+          @body = other[:body] || ''
+        end
+
+        def create
+          link = `hub pull-request create -m #{title} -m #{body}`
           link.split('/').last.to_i
         end
       end
@@ -24,6 +39,10 @@ module Rubopop
 
         def create_issue(*args)
           Issue.new(*args).create
+        end
+
+        def create_pull_request(*args)
+          PullRequest.new(*args).create
         end
       end
     end

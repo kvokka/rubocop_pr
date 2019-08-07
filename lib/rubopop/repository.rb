@@ -19,6 +19,11 @@ module Rubopop
       def create_issue(*)
         raise NotImplemented, 'should be implemented on sub-class'
       end
+
+      # return Integer pull_request number
+      def create_pull_request(*)
+        raise NotImplemented, 'should be implemented on sub-class'
+      end
     end
   end
 end

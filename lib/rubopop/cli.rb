@@ -23,7 +23,10 @@ module Rubopop
         rubocop.autofix
         next if Git.status.blank?
         Git.checkout(options.master_branch)
-        Git.commit_all("Fix Rubocop #{cop}")
+        title = "Fix Rubocop #{cop} warnings"
+        Git.commit_all(title)
+        issue_number = repository.create_issue(title: title)
+        repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
       end
     end
   end
