@@ -18,9 +18,11 @@ module Rubopop
 
     private
 
-    def run
-      rubocop.each do |cop|
-        next if Git.status.blank?
+    def run # rubocop:disable  Metrics/AbcSize, Metrics/MethodLength
+      rubocop.inject(0) do |counter, cop|
+        next counter if Git.status.blank?
+        break counter if counter >= options.limit
+
         Git.checkout(options.master_branch)
         title = "Fix Rubocop #{cop} warnings"
         issue_number = repository.create_issue(title: title)
@@ -28,6 +30,7 @@ module Rubopop
         Git.commit_all(title)
         Git.push(options.git_origin)
         repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
+        counter + 1
       end
     end
   end

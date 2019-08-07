@@ -1,0 +1,23 @@
+Layout/Cop1:
+  Exclude:
+    - 'lib/file.rb'
+
+Layout/Cop2:
+  Exclude:
+    - 'lib/file.rb'
+
+Layout/Cop3:
+  Exclude:
+    - 'lib/file.rb'
+
+Layout/Cop4:
+  Exclude:
+    - 'lib/file.rb'
+
+Layout/Cop5:
+  Exclude:
+    - 'lib/file.rb'
+
+Layout/Cop6:
+  Exclude:
+    - 'lib/file.rb'

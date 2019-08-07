@@ -15,7 +15,7 @@ module Rubopop
       YAML.safe_load(read_or_generate_todo)
     end
 
-    def each
+    def each # rubocop:disable  Metrics/AbcSize
       Git.checkout(branch) if branch
       todos = todo
       todos.each_key do |cop|

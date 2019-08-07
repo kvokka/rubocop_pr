@@ -75,6 +75,21 @@ module Rubopop
           expect(Git).to have_received(:push).exactly(2).times
         end
       end
+
+      context 'with big todo and low limit option' do
+        before do
+          allow(subject.rubocop).to receive(:read_or_generate_todo)
+            .and_return(SPEC_ROOT.join('fixtures', 'big_todo.yml').read)
+          allow(Git).to receive(:status).and_return('path/to/changed/file')
+        end
+
+        subject { described_class.new(['--limit', '5']) }
+
+        it 'should create 5 pull requests' do
+          subject.run!
+          expect(subject.repository).to have_received(:create_pull_request).exactly(5).times
+        end
+      end
     end
   end
 end

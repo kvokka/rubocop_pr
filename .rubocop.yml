@@ -6,6 +6,3 @@ Metrics/LineLength:
 
 Metrics/BlockLength:
   ExcludedMethods: ['describe', 'context']
-
-Metrics/AbcSize:
-  Max: 20
