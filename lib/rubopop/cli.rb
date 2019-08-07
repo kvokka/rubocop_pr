@@ -7,7 +7,7 @@ module Rubopop
 
     def initialize(argv = [])
       @options = Options.new(argv).parse
-      @git = Git.new(post_checkout: @options.post_checkout)
+      @git = Git.new(post_checkout: @options.post_checkout, origin: @options.git_origin)
       @repository = Repository.all.fetch(@options.repository)
       @rubocop = Rubopop::Rubocop.new(branch: @options.rubocop_todo_branch, git: @git)
     end
@@ -34,7 +34,7 @@ module Rubopop
       issue_number = repository.create_issue(title: title)
       git.checkout("#{issue_number}-rubocop-fix-#{cop.underscore.tr('/_', '-')}")
       git.commit_all(title)
-      git.push(options.git_origin)
+      git.push
       repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
     end
   end

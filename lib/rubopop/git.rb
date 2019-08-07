@@ -1,10 +1,11 @@
 module Rubopop
   # small helper for git commands, everything should be stubbed in tests
   class Git
-    attr_reader :post_checkout
+    attr_reader :post_checkout, :origin
 
-    def initialize(post_checkout: '', **_options)
+    def initialize(post_checkout: '', origin: '', **_options)
       @post_checkout = post_checkout
+      @origin = origin
     end
 
     def checkout(branch)
@@ -18,7 +19,7 @@ module Rubopop
       system "git commit -m '#{message}'"
     end
 
-    def push(origin)
+    def push
       system "git push --set-upstream #{origin} #{current_branch}"
     end
 
