@@ -11,4 +11,6 @@ rvm:
   - 2.6
 before_install:
   - gem install bundler -v 1.17.3
-  - apt install hub
+  - sudo add-apt-repository ppa:cpick/hub -y
+  - sudo apt-get update
+  - sudo apt-get install hub
