@@ -26,9 +26,10 @@ module Rubopop
         next counter if git.status.blank?
         process_cop(cop)
 
-        break counter if counter >= options.limit - 1
+        break if counter >= options.limit - 1
         counter + 1
       end
+      git.checkout(options.master_branch)
     end
 
     def process_cop(cop)
@@ -42,7 +43,7 @@ module Rubopop
     end
 
     def prepare_fixed_files(cop)
-      git.commit_all("Remove Rubocop #{cop} from todo")
+      git.commit_all("Remove only Rubocop #{cop} from todo")
       rubocop.autofix
     end
   end

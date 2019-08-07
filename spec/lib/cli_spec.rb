@@ -20,8 +20,8 @@ module Rubopop
           subject.run!
         end
 
-        it 'one checkout on the start + 2 for todo file' do
-          expect(subject.git).to have_received(:exec_checkout).exactly(3).times
+        it 'one checkout on the start&finish + 2 for todo file' do
+          expect(subject.git).to have_received(:exec_checkout).exactly(4).times
         end
 
         it 'commit 2 rubocop todo updates' do
@@ -51,8 +51,8 @@ module Rubopop
           subject.run!
         end
 
-        it 'one checkout on the start + 2 for todo file + 2 for lints + 2 times for the new branch' do
-          expect(subject.git).to have_received(:exec_checkout).exactly(7).times
+        it 'one checkout on the start&finish + 2 for todo file + 2 for lints + 2 times for the new branch' do
+          expect(subject.git).to have_received(:exec_checkout).exactly(8).times
         end
 
         it 'commit 2 rubocop todo updates + 2 lint updates' do
@@ -99,9 +99,9 @@ module Rubopop
 
         subject { described_class.new(['--post-checkout', 'echo 42']) }
 
-        it 'run post_checkout one checkout on the start + 2 for todo file + 2 for lints + 2 times for the new branch' do
+        it 'run post_checkout checkout on the start&finish + 2 for todo file + 2 for lints + 2 for the new branch' do
           subject.run!
-          expect(subject.git).to have_received(:exec_post_checkout).exactly(7).times
+          expect(subject.git).to have_received(:exec_post_checkout).exactly(8).times
         end
       end
     end

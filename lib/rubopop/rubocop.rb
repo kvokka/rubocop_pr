@@ -17,10 +17,10 @@ module Rubopop
     end
 
     def each
-      git.checkout(branch) if branch
+      git.checkout(branch)
       todos_backup = todo
       todos_backup.each_key do |cop|
-        git.checkout(branch) if branch
+        git.checkout(branch)
         todos = todos_backup.dup
         todos.delete cop
         File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
