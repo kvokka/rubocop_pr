@@ -3,7 +3,7 @@ module Rubopop
   class Rubocop
     include Enumerable
 
-    TODO_FILENAME = '.ruby-rubocop.yml'.freeze
+    TODO_FILENAME = '.rubocop_todo.yml'.freeze
 
     attr_reader :branch, :git
 
