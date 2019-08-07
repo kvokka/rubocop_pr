@@ -15,6 +15,11 @@ module Rubopop
       def checks
         []
       end
+
+      # return Integer issue number
+      def create_issue(*)
+        raise NotImplemented, 'should be implemented on sub-class'
+      end
     end
   end
 end
