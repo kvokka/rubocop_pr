@@ -3,7 +3,7 @@ module Rubopop
     context 'run!' do
       before do
         allow(EnvironmentChecker).to receive(:call)
-        allow(subject.rubocop).to receive(:autofix)
+        allow(subject.rubocop).to receive(:corrected?)
         allow(subject.rubocop).to receive(:read_or_generate_todo)
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
         allow(subject.git).to receive(:exec_checkout).and_return(true)
@@ -55,8 +55,8 @@ module Rubopop
           expect(subject.git).to have_received(:exec_checkout).exactly(8).times
         end
 
-        it 'commit 2 rubocop todo updates + 2 lint updates' do
-          expect(subject.git).to have_received(:commit_all).exactly(4).times
+        it 'commit 2 lint updates' do
+          expect(subject.git).to have_received(:commit_all).exactly(2).times
         end
 
         it 'update todo file' do

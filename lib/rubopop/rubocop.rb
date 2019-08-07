@@ -39,8 +39,10 @@ module Rubopop
       `bundle exec rubocop --auto-gen-config`
     end
 
-    def autofix
+    def corrected?
       `bundle exec rubocop -a`
+      git.checkout TODO_FILENAME
+      !git.status.blank?
     end
   end
 end

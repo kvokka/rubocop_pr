@@ -28,6 +28,7 @@ module Rubopop
         add_limit_option(opts)
         add_repository_option(opts)
         add_git_origin_option(opts)
+        add_continue_option(opts)
         add_version_option(opts)
         add_on_tail(opts)
       end
@@ -86,6 +87,13 @@ module Rubopop
       msg = 'Set repository host (default: github)'
       opts.on('-g [name] ', '--repository [name]', msg) do |v|
         @options.repository = v
+      end
+    end
+
+    def add_continue_option(opts)
+      @options.continue = false
+      opts.on('-c', '--continue', 'Continue previous session (default: false)') do |_v|
+        @options.continue = true
       end
     end
 

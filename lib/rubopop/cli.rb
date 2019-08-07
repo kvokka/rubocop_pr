@@ -15,6 +15,7 @@ module Rubopop
     def run!
       EnvironmentChecker.call(repository, options)
       run
+      git.checkout(options.master_branch)
     end
 
     private
@@ -22,29 +23,27 @@ module Rubopop
     def run
       rubocop.inject(0) do |counter, cop|
         next counter if git.status.blank?
-        prepare_fixed_files(cop)
-        next counter if git.status.blank?
+        next counter if options.continue && git.branch =~ /#{branch_suffix(cop)}\s/
+        next counter unless rubocop.corrected?
         process_cop(cop)
 
         break if counter >= options.limit - 1
         counter + 1
       end
-      git.checkout(options.master_branch)
     end
 
     def process_cop(cop)
       git.checkout(options.master_branch)
       title = "Fix Rubocop #{cop} warnings"
       issue_number = repository.create_issue(title: title)
-      git.checkout("#{issue_number}-rubocop-fix-#{cop.underscore.tr('/_', '-')}")
+      git.checkout("#{issue_number}-#{branch_suffix(cop)}")
       git.commit_all(title)
       git.push
       repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
     end
 
-    def prepare_fixed_files(cop)
-      git.commit_all("Remove only Rubocop #{cop} from todo")
-      rubocop.autofix
+    def branch_suffix(cop)
+      "rubocop-fix-#{cop.underscore.tr('/_', '-')}"
     end
   end
 end

@@ -18,6 +18,7 @@ module Rubopop
       it('post_checkout') { is_expected.to have_key :post_checkout }
       it('git_origin') { is_expected.to have_key :git_origin }
       it('limit') { is_expected.to have_key :limit }
+      it('continue') { is_expected.to have_key :continue }
     end
   end
 end

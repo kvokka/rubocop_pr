@@ -8,9 +8,9 @@ module Rubopop
       @origin = origin
     end
 
-    def checkout(branch)
-      return process_post_checkout if exec_checkout(branch)
-      exec_checkout branch, flags: ['-b']
+    def checkout(file_or_branch)
+      return process_post_checkout if exec_checkout(file_or_branch)
+      exec_checkout file_or_branch, flags: ['-b']
       process_post_checkout
     end
 
@@ -29,6 +29,10 @@ module Rubopop
 
     def status
       `git status -s`
+    end
+
+    def branch
+      `git branch`
     end
 
     private

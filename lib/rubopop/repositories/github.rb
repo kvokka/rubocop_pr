@@ -8,12 +8,17 @@ module Rubopop
 
         def initialize(title:, **other)
           @title = title
-          @body = other[:body] || ''
+          @body = other[:body] || default_body
         end
 
         def create
           link = `hub issue create -m '#{title}' -m '#{body}'`
           link.split('/').last.to_i
+        end
+
+        def default_body
+          'This issue was created by [rubopop](https://github.com/kvokka/rubopop) for ' \
+            '[rubocop](https://github.com/rubocop-hq/rubocop)'
         end
       end
 
