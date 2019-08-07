@@ -1,5 +1,7 @@
 # Rubopop
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8be41ff90d294d7bb4c01fb3c98ebac9)](https://app.codacy.com/app/kvokka/rubopop?utm_source=github.com&utm_medium=referral&utm_content=kvokka/rubopop&utm_campaign=Badge_Grade_Dashboard)
+
 [![Version               ][rubygems_badge]][rubygems]
 [![Build Status          ][travisci_badge]][travisci]
 [![Codacy Badge          ][codacy_badge]][codacy]
