@@ -1,5 +1,5 @@
 module Rubopop
-  # small helper for git commands
+  # small helper for git commands, everything should be stubbed in tests
   class Git
     class << self
       def status
@@ -8,7 +8,7 @@ module Rubopop
 
       def checkout(branch)
         `git checkout #{branch}`
-        return true if $?.success?
+        return true if $CHILD_STATUS.success?
         `git checkout -b #{branch}`
       end
 

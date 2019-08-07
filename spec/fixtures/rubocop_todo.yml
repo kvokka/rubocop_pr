@@ -1,0 +1,7 @@
+Layout/Cop1:
+  Exclude:
+    - 'lib/file1.rb'
+
+Layout/Cop2:
+  Exclude:
+    - 'lib/file2.rb'

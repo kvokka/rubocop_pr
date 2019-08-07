@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
 require 'bundler/setup'
+require 'pathname'
 require 'rubopop'
+
+SPEC_ROOT = Pathname.new(File.expand_path('.', __dir__))
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

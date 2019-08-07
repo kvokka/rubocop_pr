@@ -3,12 +3,14 @@
 require 'optparse'
 require 'ostruct'
 require 'active_support/core_ext/hash'
+require 'yaml'
 
 require 'pry'
 
 require 'rubopop/version'
 require 'rubopop/options'
 require 'rubopop/environment_checker'
+require 'rubopop/rubocop'
 require 'rubopop/repository'
 require 'rubopop/repositories/github'
 require 'rubopop/repositories/github/checks/verify_hub_version'
