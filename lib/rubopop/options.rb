@@ -26,17 +26,9 @@ module Rubopop
         add_master_branch_option(opts)
         add_post_checkout_option(opts)
         add_limit_option(opts)
-        add_debug_option(opts)
         add_repository_option(opts)
         add_git_origin_option(opts)
         add_on_tail(opts)
-      end
-    end
-
-    def add_debug_option(opts)
-      @options.debug = false
-      opts.on('--debug', 'Output debugging information (default false)') do |_v|
-        @options.debug = true
       end
     end
 
