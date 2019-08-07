@@ -25,7 +25,7 @@ module Rubopop
         end
 
         it 'commit 2 rubocop todo updates' do
-          expect(subject.git).to have_received(:commit_all).exactly(2).times
+          expect(subject.git).to have_received(:commit_all).exactly(0).times
         end
 
         it 'update todo file' do

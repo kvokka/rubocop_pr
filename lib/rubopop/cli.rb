@@ -22,13 +22,16 @@ module Rubopop
     def run
       rubocop.inject(0) do |counter, cop|
         next counter if git.status.blank?
-        break counter if counter >= options.limit
+        prepare_fixed_files(cop)
+        next counter if git.status.blank?
         process_cop(cop)
+
+        break counter if counter >= options.limit - 1
         counter + 1
       end
     end
 
-    def process_cop(cop) # rubocop:disable Metrics/AbcSize
+    def process_cop(cop)
       git.checkout(options.master_branch)
       title = "Fix Rubocop #{cop} warnings"
       issue_number = repository.create_issue(title: title)
@@ -36,6 +39,11 @@ module Rubopop
       git.commit_all(title)
       git.push
       repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
+    end
+
+    def prepare_fixed_files(cop)
+      git.commit_all("Remove Rubocop #{cop} from todo")
+      rubocop.autofix
     end
   end
 end

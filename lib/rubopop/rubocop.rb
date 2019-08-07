@@ -16,7 +16,7 @@ module Rubopop
       YAML.safe_load(read_or_generate_todo)
     end
 
-    def each # rubocop:disable  Metrics/AbcSize, Metrics/MethodLength
+    def each
       git.checkout(branch) if branch
       todos_backup = todo
       todos_backup.each_key do |cop|
@@ -24,8 +24,6 @@ module Rubopop
         todos = todos_backup.dup
         todos.delete cop
         File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
-        git.commit_all("Remove Rubocop #{cop} from todo")
-        autofix
         yield cop
       end
     end
