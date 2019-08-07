@@ -12,7 +12,7 @@ module Rubopop
         end
 
         def create
-          link = `hub issue create -m #{title} -m #{body}`
+          link = `hub issue create -m '#{title}' -m '#{body}'`
           link.split('/').last.to_i
         end
       end
@@ -27,7 +27,7 @@ module Rubopop
         end
 
         def create
-          link = `hub pull-request create -m #{title} -m #{body}`
+          link = `hub pull-request create -m '#{title}' -m '#{body}'`
           link.split('/').last.to_i
         end
       end
