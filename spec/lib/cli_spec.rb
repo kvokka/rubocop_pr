@@ -6,7 +6,7 @@ module Rubopop
         allow(subject.rubocop).to receive(:autofix)
         allow(subject.rubocop).to receive(:read_or_generate_todo)
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
-        allow(subject.git).to receive(:checkout)
+        allow(subject.git).to receive(:exec_checkout).and_return(true)
         allow(subject.git).to receive(:commit_all)
         allow(subject.git).to receive(:push)
         allow(subject.repository).to receive(:create_pull_request)
@@ -21,7 +21,7 @@ module Rubopop
         end
 
         it 'one checkout on the start + 2 for todo file' do
-          expect(subject.git).to have_received(:checkout).exactly(3).times
+          expect(subject.git).to have_received(:exec_checkout).exactly(3).times
         end
 
         it 'commit 2 rubocop todo updates' do
@@ -52,7 +52,7 @@ module Rubopop
         end
 
         it 'one checkout on the start + 2 for todo file + 2 for lints + 2 times for the new branch' do
-          expect(subject.git).to have_received(:checkout).exactly(7).times
+          expect(subject.git).to have_received(:exec_checkout).exactly(7).times
         end
 
         it 'commit 2 rubocop todo updates + 2 lint updates' do
@@ -88,6 +88,20 @@ module Rubopop
         it 'should create 5 pull requests' do
           subject.run!
           expect(subject.repository).to have_received(:create_pull_request).exactly(5).times
+        end
+      end
+
+      context 'should run post checkout it is provided' do
+        before do
+          allow(subject.git).to receive(:status).and_return('path/to/changed/file')
+          allow(subject.git).to receive(:exec_post_checkout)
+        end
+
+        subject { described_class.new(['--post-checkout', 'echo 42']) }
+
+        it 'run post_checkout one checkout on the start + 2 for todo file + 2 for lints + 2 times for the new branch' do
+          subject.run!
+          expect(subject.git).to have_received(:exec_post_checkout).exactly(7).times
         end
       end
     end

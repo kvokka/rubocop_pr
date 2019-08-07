@@ -7,34 +7,41 @@ module Rubopop
       @post_checkout = post_checkout
     end
 
-    def status
-      `git status -s`
-    end
-
     def checkout(branch)
-      `git checkout #{branch}`
-      return process_post_checkout if $CHILD_STATUS.success?
-      `git checkout -b #{branch}`
+      return process_post_checkout if exec_checkout(branch)
+      exec_checkout branch, flags: ['-b']
       process_post_checkout
     end
 
     def commit_all(message)
-      `git add .`
-      `git commit -m #{message}`
+      system 'git add .'
+      system "git commit -m #{message}"
     end
 
     def push(origin)
-      `git push --set-upstream #{origin} #{current_branch}`
+      system "git push --set-upstream #{origin} #{current_branch}"
     end
 
     def current_branch
       `git branch --show-current`.chomp
     end
 
+    def status
+      `git status -s`
+    end
+
     private
 
     def process_post_checkout
-      post_checkout.blank? ? true : `#{post_checkout}`
+      post_checkout.blank? ? true : exec_post_checkout
+    end
+
+    def exec_checkout(branch, flags: [])
+      system "git checkout #{flags.join(' ')} #{branch}"
+    end
+
+    def exec_post_checkout
+      system post_checkout.to_s
     end
   end
 end

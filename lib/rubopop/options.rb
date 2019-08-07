@@ -44,7 +44,7 @@ module Rubopop
       @options.post_checkout = ''
       msg = 'Running after each git checkout (default: "")'
       opts.on('-r [command]', '--post-checkout [command]', String, msg) do |v|
-        @options.seats = v
+        @options.post_checkout = v
       end
     end
 
