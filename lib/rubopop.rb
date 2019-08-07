@@ -2,6 +2,7 @@
 
 require 'optparse'
 require 'ostruct'
+require 'active_support/core_ext/hash'
 
 require 'pry'
 
@@ -9,8 +10,8 @@ require 'rubopop/version'
 require 'rubopop/options'
 require 'rubopop/environment_checker'
 require 'rubopop/repository'
-require 'rubopop/repositories/github/repository'
-require 'rubopop/repositories/github/verify_hub_version'
+require 'rubopop/repositories/github'
+require 'rubopop/repositories/github/checks/verify_hub_version'
 require 'rubopop/cli'
 
 # The entry point

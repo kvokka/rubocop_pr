@@ -21,13 +21,13 @@ module Rubopop
       let(:repository) { Rubopop::Repository.all.fetch('github') }
 
       before do
-        allow(Repositories::Github::VerifyHubVersion).to receive(:call)
+        allow(Repositories::Github::Checks::VerifyHubVersion).to receive(:call)
       end
 
       it 'should run all checks' do
         subject
         expect(EnvironmentChecker::GitStatus).to have_received(:call)
-        expect(Repositories::Github::VerifyHubVersion).to have_received(:call)
+        expect(Repositories::Github::Checks::VerifyHubVersion).to have_received(:call)
       end
     end
   end

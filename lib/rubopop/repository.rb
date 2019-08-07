@@ -3,12 +3,11 @@ module Rubopop
   class Repository
     class << self
       def all
-        @all ||= {}
+        @all ||= ::ActiveSupport::HashWithIndifferentAccess.new
       end
 
       def inherited(base)
-        name = base.name.split('::').slice(-2).downcase
-        all[name] = base
+        all[base.name.demodulize.underscore] = base
       end
 
       # Array of Class which respond_to ::call and raise if check do not pass
