@@ -1,7 +1,5 @@
 # Rubopop
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8be41ff90d294d7bb4c01fb3c98ebac9)](https://app.codacy.com/app/kvokka/rubopop?utm_source=github.com&utm_medium=referral&utm_content=kvokka/rubopop&utm_campaign=Badge_Grade_Dashboard)
-
 [![Version               ][rubygems_badge]][rubygems]
 [![Build Status          ][travisci_badge]][travisci]
 [![Codacy Badge          ][codacy_badge]][codacy]
@@ -76,8 +74,7 @@ Everyone interacting in the Rubopop project’s codebases, issue trackers, chat 
 [travisci]: https://travis-ci.org/kvokka/rubopop
 [rubygems]: https://rubygems.org/gems/rubopop
 [rubygems_badge]: http://img.shields.io/gem/v/rubopop.svg
-[codacy_badge]: https://api.codacy.com/project/badge/update_me
-[codacy]: https://www.codacy.com/app/kvokka/rubopop?utm_source=github.com&amp;utm_medium=referral&amp;
-       │ utm_content=kvokka/rubopop&amp;utm_campaign=Badge_Grade
+[codacy_badge]: https://api.codacy.com/project/badge/Grade/8be41ff90d294d7bb4c01fb3c98ebac9
+[codacy]: https://app.codacy.com/app/kvokka/rubopop?utm_source=github.com&utm_medium=referral&utm_content=kvokka/rubopop&utm_campaign=Badge_Grade_Dashboard
 [hound_badge]: https://img.shields.io/badge/Reviewed_by-Hound-8E64B0.svg
 [hound]: https://houndci.com
