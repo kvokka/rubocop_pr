@@ -36,7 +36,7 @@ module Rubopop
     def add_limit_option(opts)
       @options.limit = 10
       msg = "Limit the PS's for one run"
-      opts.on('-t [limit]', '--limit [limit]', Integer, msg) do |v|
+      opts.on('-l [limit]', '--limit [limit]', Integer, msg) do |v|
         @options.limit = v
       end
     end
