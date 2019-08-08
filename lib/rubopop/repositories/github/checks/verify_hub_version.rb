@@ -14,7 +14,7 @@ module Rubopop
 
           def system_hub_version
             matches = hub_version.match(/hub version (?<hub_version>(.*))/)
-            Gem::Version.new matches.named_captures.fetch('hub_version')
+            Gem::Version.new matches.captures.last
           rescue StandardError
             raise "Robopop requires https://github.com/github/hub version >= #{Rubopop::HUB_VERSION}"
           end

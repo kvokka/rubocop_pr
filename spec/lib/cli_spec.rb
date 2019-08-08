@@ -3,7 +3,7 @@ module Rubopop
     context 'run!' do
       before do
         allow(EnvironmentChecker).to receive(:call)
-        allow(subject.rubocop).to receive(:corrected?)
+        allow(subject.rubocop).to receive(:corrected?).and_return(true)
         allow(subject.rubocop).to receive(:read_or_generate_todo)
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
         allow(subject.git).to receive(:exec_checkout).and_return(true)
