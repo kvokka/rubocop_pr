@@ -19,7 +19,7 @@ module RubocopPr
     def each
       git.checkout(branch)
       todos_backup = todo
-      todos_backup.each_key do |cop|
+      todos_backup.keys.sort.reverse_each do |cop|
         git.checkout(branch)
         todos = todos_backup.dup
         todos.delete cop
