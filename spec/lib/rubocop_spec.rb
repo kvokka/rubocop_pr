@@ -1,4 +1,4 @@
-module Rubopop
+module RubocopPr
   RSpec.describe Rubocop do
     context 'todo' do
       context 'with todo file' do

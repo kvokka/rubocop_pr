@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   RSpec.describe EnvironmentChecker do
     let(:options) { OpenStruct.new }
     let(:repository) { Repository }
@@ -18,7 +18,7 @@ module Rubopop
     end
 
     context 'with github repository' do
-      let(:repository) { Rubopop::Repository.all.fetch('github') }
+      let(:repository) { RubocopPr::Repository.all.fetch('github') }
 
       before do
         allow(Repositories::Github::Checks::VerifyHubVersion).to receive(:call)

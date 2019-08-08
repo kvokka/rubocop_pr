@@ -1,4 +1,4 @@
-module Rubopop
+module RubocopPr
   # abstract repository class
   class Repository
     class << self

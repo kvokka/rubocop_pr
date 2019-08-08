@@ -1,7 +1,7 @@
-module Rubopop
+module RubocopPr
   module Repositories
     # Github repository
-    class Github < Rubopop::Repository
+    class Github < RubocopPr::Repository
       # The representation of the Issue
       class Issue
         attr_reader :title, :body
@@ -17,7 +17,7 @@ module Rubopop
         end
 
         def default_body
-          'This issue was created by [rubopop](https://github.com/kvokka/rubopop) for ' \
+          'This issue was created by [rubocop_pr](https://github.com/kvokka/rubocop_pr) for ' \
             '[rubocop](https://github.com/rubocop-hq/rubocop)'
         end
       end
@@ -39,7 +39,7 @@ module Rubopop
 
       class << self
         def checks
-          super + [Rubopop::Repositories::Github::Checks::VerifyHubVersion]
+          super + [RubocopPr::Repositories::Github::Checks::VerifyHubVersion]
         end
 
         def create_issue(*args)

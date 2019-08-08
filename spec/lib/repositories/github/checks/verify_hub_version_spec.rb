@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   module Repositories
-    class Github < Rubopop::Repository
+    class Github < RubocopPr::Repository
       module Checks
         RSpec.describe VerifyHubVersion do
           let(:options) { OpenStruct.new }

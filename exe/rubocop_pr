@@ -3,10 +3,10 @@
 
 $LOAD_PATH.unshift("#{__dir__}/../lib")
 
-require 'rubopop'
+require 'rubocop_pr'
 require 'benchmark'
 
-cli = Rubopop::CLI.new(ARGV)
+cli = RubocopPr::CLI.new(ARGV)
 result = 0
 
 time = Benchmark.realtime do

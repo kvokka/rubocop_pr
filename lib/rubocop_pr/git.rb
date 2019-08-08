@@ -1,4 +1,4 @@
-module Rubopop
+module RubocopPr
   # small helper for git commands, everything should be stubbed in tests
   class Git
     attr_reader :post_checkout, :origin

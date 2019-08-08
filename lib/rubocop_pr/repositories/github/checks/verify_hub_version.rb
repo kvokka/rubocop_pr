@@ -1,6 +1,6 @@
-module Rubopop
+module RubocopPr
   module Repositories
-    class Github < Rubopop::Repository
+    class Github < RubocopPr::Repository
       module Checks
         # Check, if `hub` installed and have right version
         module VerifyHubVersion
@@ -16,7 +16,7 @@ module Rubopop
             matches = hub_version.match(/hub version (?<hub_version>(.*))/)
             Gem::Version.new matches.captures.last
           rescue StandardError
-            raise "Robopop requires https://github.com/github/hub version >= #{Rubopop::HUB_VERSION}"
+            raise "Robopop requires https://github.com/github/hub version >= #{RubocopPr::HUB_VERSION}"
           end
 
           def hub_version

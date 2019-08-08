@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   RSpec.describe Options do
     context 'parse' do
       subject { described_class.new([]).parse }

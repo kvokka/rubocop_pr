@@ -1,4 +1,4 @@
-module Rubopop
+module RubocopPr
   RSpec.describe CLI do
     context 'run!' do
       before do

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   # Service class, which only goal is to check that the system is suitable to run the script.
   class EnvironmentChecker
     def self.checks
@@ -22,7 +22,7 @@ module Rubopop
       end
 
       def git_status
-        Rubopop::Git.new.status
+        RubocopPr::Git.new.status
       end
     end
   end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   # Parse the options from the command line
   class Options
     attr_reader :options, :args
@@ -19,7 +19,7 @@ module Rubopop
 
     def build_parser # rubocop:disable Metrics/MethodLength
       @parser = OptionParser.new do |opts|
-        opts.banner = 'Usage: rubopop [options]'
+        opts.banner = 'Usage: rubocop_pr [options]'
 
         add_hub_version_option(opts)
         add_rubocop_todo_branch_option(opts)
@@ -99,7 +99,7 @@ module Rubopop
 
     def add_version_option(opts)
       opts.on('-v', '--version', 'Display version') do
-        puts Rubopop::VERSION
+        puts RubocopPr::VERSION
         exit
       end
     end

@@ -2,7 +2,7 @@
 
 require 'bundler/setup'
 require 'pathname'
-require 'rubopop'
+require 'rubocop_pr'
 
 SPEC_ROOT = Pathname.new(File.expand_path('.', __dir__))
 

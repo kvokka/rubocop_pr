@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Rubopop
+module RubocopPr
   # Cunner from CLI interface
   class CLI
     attr_reader :options, :repository, :rubocop, :git
@@ -9,7 +9,7 @@ module Rubopop
       @options = Options.new(argv).parse
       @git = Git.new(post_checkout: @options.post_checkout, origin: @options.git_origin)
       @repository = Repository.all.fetch(@options.repository)
-      @rubocop = Rubopop::Rubocop.new(branch: @options.rubocop_todo_branch, git: @git)
+      @rubocop = RubocopPr::Rubocop.new(branch: @options.rubocop_todo_branch, git: @git)
     end
 
     def run!

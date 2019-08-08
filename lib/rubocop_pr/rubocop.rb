@@ -1,4 +1,4 @@
-module Rubopop
+module RubocopPr
   # small helper for rubocop commands, everything should be stubbed in tests
   class Rubocop
     include Enumerable
