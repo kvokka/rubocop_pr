@@ -7,7 +7,10 @@
 
 CLI Issues and PR creator for Rubocop Cops. 1 linter == 1 issue == 1 PR.
 
-With RubocopPr you can apply [Rubocop][rubocop_repo] clean and in a few minutes.
+Simplify the inception or version bump of [Rubocop][rubocop_repo] on the project.
+
+With RubocopPr you can apply [Rubocop][rubocop_repo] clean and in a few minutes,
+see the [example][rubocop_pr_example].
 
 ## Requirements
 
@@ -49,7 +52,7 @@ Usage: rubocop_pr [options]
 
 #### Notes
 
-* `brach` option is useful, if you want to prepare the `.rubocop-todo.yml` manually and feed it to `rubocop_pr`
+* `brach` option is useful, if you want to prepare the `.rubocop-todo.yml` manually and feed it to `rubocop_pr`.
 * `post-checkout` handy for old Ruby versions, when shell may "forget" Ruby version.
 
 ## Contributing
@@ -64,12 +67,11 @@ The gem is available as open source under the terms of the [MIT License][mit_lin
 
 Everyone interacting in the RubocopPr project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct][code_of_conduct_link].
 
-
 [rubocop_repo]: https://github.com/rubocop-hq/rubocop
 [contributor_covenant_link]: http://contributor-covenant.org
 [mit_link]: https://opensource.org/licenses/MIT
 [code_of_conduct_link]: https://github.com/[USERNAME]/rubocop_pr/blob/master/CODE_OF_CONDUCT.md
-
+[rubocop_pr_example]: https://github.com/kvokka/rubocop_pr_example
 [travisci_badge]: https://travis-ci.org/kvokka/rubocop_pr.svg?branch=master
 [travisci]: https://travis-ci.org/kvokka/rubocop_pr
 [rubygems]: https://rubygems.org/gems/rubocop_pr
