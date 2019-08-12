@@ -19,6 +19,10 @@ module RubocopPr
       it('git_origin') { is_expected.to have_key :git_origin }
       it('limit') { is_expected.to have_key :limit }
       it('continue') { is_expected.to have_key :continue }
+      it('issue_labels') { is_expected.to have_key :issue_labels }
+      it('pull_request_labels') { is_expected.to have_key :pull_request_labels }
+      it('issue_assignees') { is_expected.to have_key :issue_assignees }
+      it('pull_request_assignees') { is_expected.to have_key :pull_request_assignees }
     end
   end
 end

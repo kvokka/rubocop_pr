@@ -38,15 +38,21 @@ Or install it yourself as:
 
 ```bash
 Usage: rubocop_pr [options]
-    -u, --hub-version [version]      Set manually minimum required version of 'hub' utility for github (default: 2.12.3)
+    -r, --post-checkout [command]    Running after each git checkout (default: "")
+    -c, --continue                   Continue previous session (default: false)
     -b, --branch [branch]            internal branch with '.rubocop_todo.yml' (default: 'rubocop_todo_branch')
     -m, --master [branch]            branch which will be the base for all PR's (default: 'master')
-    -r, --post-checkout [command]    Running after each git checkout (default: "")
-    -l, --limit [limit]              Limit the PS's for one run (default: 10)
-    -g, --repository [name]          Set repository host (default: github)
-    -o, --origin [origin]            origin option for 'git push' (default: 'origin')
-    -c, --continue                   Continue previous session (default: false)
     -v, --version                    Display version
+    -o, --origin [origin]            origin option for 'git push' (default: 'origin')
+    -u, --hub-version [version]      Set manually minimum required version of 'hub' utility for github (default: 2.12.3)
+    -i, --issue-labels [labels]      Labels for created issues, separated by comma (default: rubocop)
+    -p [labels],                     Labels for created pull requests, separated by comma (default: rubocop)
+        --pull-request-labels
+    -a, --issue-assignees [name]     Issue assignees, separated by comma  (default: "")
+    -t [name],                       Pull request assignees, separated by comma (default: "")
+        --pull-request-assignees
+    -g, --repository [name]          Set repository host (default: github)
+    -l, --limit [limit]              Limit the PS's for one run (default: 10)
     -h, --help                       Display help
 ```
 

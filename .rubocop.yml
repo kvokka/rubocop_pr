@@ -9,3 +9,6 @@ Metrics/BlockLength:
 
 Metrics/AbcSize:
   Max: 20
+
+Metrics/ClassLength:
+  Max: 150

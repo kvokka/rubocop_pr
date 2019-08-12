@@ -34,12 +34,13 @@ module RubocopPr
 
     def process_cop(cop)
       git.checkout(options.master_branch)
-      title = "Fix Rubocop #{cop} warnings"
-      issue_number = repository.create_issue(title: title)
-      git.checkout("#{issue_number}-#{branch_suffix(cop)}")
-      git.commit_all(title)
+
+      issue = repository.issue(cop: cop, **options.to_h).create
+
+      git.checkout("#{issue.number}-#{branch_suffix(cop)}")
+      git.commit_all(issue.title)
       git.push
-      repository.create_pull_request(title: title, body: "Closes ##{issue_number}")
+      repository.pull_request(cop: cop, body: "Closes ##{issue.number}", **options.to_h).create
     end
 
     def branch_suffix(cop)

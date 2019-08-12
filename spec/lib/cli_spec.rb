@@ -1,6 +1,9 @@
 module RubocopPr
   RSpec.describe CLI do
     context 'run!' do
+      let(:issue_double) { instance_double('Github Issue', title: 'Issue title', number: 42) }
+      let(:pr_double) {    instance_double('Github PR', title: 'PR title', number: 43) }
+
       before do
         allow(EnvironmentChecker).to receive(:call)
         allow(subject.rubocop).to receive(:corrected?).and_return(true)
@@ -9,8 +12,8 @@ module RubocopPr
         allow(subject.git).to receive(:exec_checkout).and_return(true)
         allow(subject.git).to receive(:commit_all)
         allow(subject.git).to receive(:push)
-        allow(subject.repository).to receive(:create_pull_request)
-        allow(subject.repository).to receive(:create_issue)
+        allow(subject.repository).to receive(:pull_request).and_return(instance_double('Repo pr', create: pr_double))
+        allow(subject.repository).to receive(:issue).and_return(instance_double('Repo issue', create: issue_double))
         allow(File).to receive(:open)
       end
 
@@ -33,11 +36,11 @@ module RubocopPr
         end
 
         it 'do not create issue' do
-          expect(subject.repository).not_to have_received(:create_issue)
+          expect(subject.repository).not_to have_received(:issue)
         end
 
         it 'do not create pull_request' do
-          expect(subject.repository).not_to have_received(:create_pull_request)
+          expect(subject.repository).not_to have_received(:pull_request)
         end
 
         it 'do not push any branches' do
@@ -64,11 +67,13 @@ module RubocopPr
         end
 
         it 'create 2 issue' do
-          expect(subject.repository).to have_received(:create_issue).exactly(2).times
+          expect(subject.repository).to have_received(:issue).exactly(2).times
+          expect(subject.repository.issue).to have_received(:create).exactly(2).times
         end
 
         it 'create 2 pull_request' do
-          expect(subject.repository).to have_received(:create_pull_request).exactly(2).times
+          expect(subject.repository).to have_received(:pull_request).exactly(2).times
+          expect(subject.repository.pull_request).to have_received(:create).exactly(2).times
         end
 
         it 'pushed 2 branches' do
@@ -87,7 +92,8 @@ module RubocopPr
 
         it 'should create 5 pull requests' do
           subject.run!
-          expect(subject.repository).to have_received(:create_pull_request).exactly(5).times
+          expect(subject.repository).to have_received(:pull_request).exactly(5).times
+          expect(subject.repository.pull_request).to have_received(:create).exactly(5).times
         end
       end
 

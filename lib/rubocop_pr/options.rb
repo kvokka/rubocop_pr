@@ -15,22 +15,17 @@ module RubocopPr
       options
     end
 
-    class BuildParser
-      def initialize
-
-      end
-    end
-
     private
 
     attr_accessor :opts
 
-    def build_parser # rubocop:disable Metrics/MethodLength
+    # options will be printed in order, as they are declared in this file
+    def build_parser
       @parser = OptionParser.new do |op|
         self.opts = op
         opts.banner = 'Usage: rubocop_pr [options]'
 
-        private_methods(false).map(&:to_s).select{|m| m.start_with?('add_') }.each{|m| send m }
+        private_methods(false).map(&:to_s).select { |m| m.start_with?('add_') }.each { |m| send m }
       end
     end
 
@@ -79,6 +74,38 @@ module RubocopPr
       msg = "Set manually minimum required version of 'hub' utility for github (default: #{HUB_VERSION})"
       opts.on('-u [version] ', '--hub-version [version]', msg) do |v|
         @options.hub_version = v
+      end
+    end
+
+    def add_issue_labels_option
+      @options.issue_labels = ['rubocop']
+      msg = 'Labels for created issues, separated by comma (default: rubocop)'
+      opts.on('-i [labels] ', '--issue-labels [labels]', Array, msg) do |v|
+        @options.issue_labels = v
+      end
+    end
+
+    def add_pull_request_labels_option
+      @options.pull_request_labels = ['rubocop']
+      msg = 'Labels for created pull requests, separated by comma (default: rubocop)'
+      opts.on('-p [labels] ', '--pull-request-labels [labels]', Array, msg) do |v|
+        @options.pull_request_labels = v
+      end
+    end
+
+    def add_issue_assignees_option
+      @options.issue_assignees = []
+      msg = 'Issue assignees, separated by comma  (default: "")'
+      opts.on('-a [name] ', '--issue-assignees [name]', Array, msg) do |v|
+        @options.issue_assignees = v
+      end
+    end
+
+    def add_pull_request_assignees_option
+      @options.pull_request_assignees = []
+      msg = 'Pull request assignees, separated by comma (default: "")'
+      opts.on('-t [name] ', '--pull-request-assignees [name]', Array, msg) do |v|
+        @options.pull_request_assignees = v
       end
     end
 

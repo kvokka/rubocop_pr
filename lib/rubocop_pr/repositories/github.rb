@@ -2,18 +2,72 @@ module RubocopPr
   module Repositories
     # Github repository
     class Github < RubocopPr::Repository
-      # The representation of the Issue
-      class Issue
-        attr_reader :title, :body
+      # Base class for working with `hub` utility
+      class Base
+        attr_reader :title, :body, :cop, :number
 
-        def initialize(title:, **other)
-          @title = title
-          @body = other[:body] || default_body
+        def initialize(cop:, **options)
+          @cop = cop
+          @options = options
+          @title = options.delete(:title) || default_title
+          @body = options.delete(:body) || default_body
         end
 
         def create
-          link = `hub issue create -m '#{title}' -m '#{body}'`
-          link.split('/').last.to_i
+          @number = `#{build_command}`.split('/').last.to_i
+          self
+        end
+
+        def assignees
+          @assignees ||= Array options[:assignees]
+        end
+
+        def labels
+          @labels ||= Array options[:labels]
+        end
+
+        def build_command
+          [command, cli_options].join ' '
+        end
+
+        private
+
+        attr_reader :options
+
+        def command
+          raise NotImplemented
+        end
+
+        def cli_options
+          [].tap do |opt|
+            opt << "-m '#{title}'"
+            opt << "-m '#{body}'" unless body.blank?
+            opt << "-a '#{assignees.join(',')}'" unless assignees.blank?
+            opt << "-l '#{labels.join(',')}'" unless labels.blank?
+          end.join(' ')
+        end
+
+        def default_title
+          "Fix Rubocop #{cop} warnings"
+        end
+
+        def default_body
+          ''
+        end
+      end
+
+      # The representation of the Issue
+      class Issue < Base
+        def initialize(cop:, **opt)
+          super
+          @assignees = Array opt[:issue_assignees]
+          @labels = Array opt[:issue_labels]
+        end
+
+        private
+
+        def command
+          'hub issue create'
         end
 
         def default_body
@@ -23,17 +77,17 @@ module RubocopPr
       end
 
       # The representation of the PR
-      class PullRequest
-        attr_reader :title, :body
-
-        def initialize(title:, **other)
-          @title = title
-          @body = other[:body] || ''
+      class PullRequest < Base
+        def initialize(cop:, **opt)
+          super
+          @assignees = Array opt[:pull_request_assignees]
+          @labels = Array opt[:pull_request_labels]
         end
 
-        def create
-          link = `hub pull-request create -m '#{title}' -m '#{body}'`
-          link.split('/').last.to_i
+        private
+
+        def command
+          'hub pull-request create'
         end
       end
 
@@ -42,12 +96,12 @@ module RubocopPr
           super + [RubocopPr::Repositories::Github::Checks::VerifyHubVersion]
         end
 
-        def create_issue(*args)
-          Issue.new(*args).create
+        def issue(*args)
+          Issue.new(*args)
         end
 
-        def create_pull_request(*args)
-          PullRequest.new(*args).create
+        def pull_request(*args)
+          PullRequest.new(*args)
         end
       end
     end
