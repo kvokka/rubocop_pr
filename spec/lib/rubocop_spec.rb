@@ -1,5 +1,10 @@
 module RubocopPr
   RSpec.describe Rubocop do
+    before do
+      allow(described_class).to receive(:generate_todo)
+      allow(described_class).to receive(:correct!)
+    end
+
     context 'todo' do
       context 'with todo file' do
         before do
@@ -13,16 +18,18 @@ module RubocopPr
       end
 
       context 'with out todo file' do
+        subject { described_class.new git: Git.new }
+
         before do
-          allow(subject).to receive(:generate_todo)
           allow(File).to receive(:exist?)
           allow(File).to receive(:read).and_return('')
           allow(subject.git).to receive(:commit_all)
+          allow(subject.git).to receive(:checkout)
         end
 
         it('generate todo file') do
           subject.todo
-          expect(subject).to have_received(:generate_todo)
+          expect(described_class).to have_received(:generate_todo)
           expect(subject.git).to have_received(:commit_all)
         end
       end

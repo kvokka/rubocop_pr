@@ -5,6 +5,16 @@ module RubocopPr
 
     TODO_FILENAME = '.rubocop_todo.yml'.freeze
 
+    class << self
+      def generate_todo
+        system 'bundle exec rubocop --auto-gen-config'
+      end
+
+      def correct!
+        system 'bundle exec rubocop -a'
+      end
+    end
+
     attr_reader :branch, :git
 
     def initialize(**options)
@@ -13,36 +23,25 @@ module RubocopPr
     end
 
     def todo
-      YAML.safe_load(read_or_generate_todo)
+      @todo ||= YAML.safe_load(read_or_generate_todo)
     end
 
     def each
-      git.checkout(branch)
-      todos_backup = todo
-      todos_backup.keys.sort.reverse_each do |cop|
+      todo.keys.sort.reverse_each do |cop|
         git.checkout(branch)
-        todos = todos_backup.dup
-        todos.delete cop
-        File.open(TODO_FILENAME, 'w') { |f| f.write todos.blank? ? '' : YAML.dump(todos) }
-        yield cop
+        File.open(TODO_FILENAME, 'w') do |f|
+          f.write todo.except(cop.to_s).blank? ? '' : YAML.dump(todo.except(cop.to_s))
+        end
+        yield Cop.new(name: cop)
       end
     end
 
     def read_or_generate_todo
+      git.checkout(branch)
       return File.read(TODO_FILENAME) if File.exist?(TODO_FILENAME)
-      generate_todo
+      self.class.generate_todo
       git.commit_all('Generate initial Rubocop todo file')
       File.read(TODO_FILENAME)
-    end
-
-    def generate_todo
-      `bundle exec rubocop --auto-gen-config`
-    end
-
-    def corrected?
-      `bundle exec rubocop -a`
-      git.checkout TODO_FILENAME
-      !git.status.blank?
     end
   end
 end
