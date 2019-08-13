@@ -6,7 +6,7 @@ module RubocopPr
 
       before do
         allow(EnvironmentChecker).to receive(:call)
-        allow(subject.rubocop).to receive(:corrected?).and_return(true)
+        allow(Rubocop).to receive(:correct!)
         allow(subject.rubocop).to receive(:read_or_generate_todo)
           .and_return(SPEC_ROOT.join('fixtures', 'rubocop_todo.yml').read)
         allow(subject.git).to receive(:exec_checkout).and_return(true)
@@ -23,8 +23,8 @@ module RubocopPr
           subject.run!
         end
 
-        it 'one checkout on the start&finish + 2 for todo file' do
-          expect(subject.git).to have_received(:exec_checkout).exactly(4).times
+        it 'one checkout on the finish + 2 for todo file' do
+          expect(subject.git).to have_received(:exec_checkout).exactly(3).times
         end
 
         it 'commit 2 rubocop todo updates' do
@@ -54,8 +54,8 @@ module RubocopPr
           subject.run!
         end
 
-        it 'one checkout on the start&finish + 2 for todo file + 2 for lints + 2 times for the new branch' do
-          expect(subject.git).to have_received(:exec_checkout).exactly(8).times
+        it 'one checkout on the finish + 3 for todo file + 3 for lints + 2 times for the new branch' do
+          expect(subject.git).to have_received(:exec_checkout).exactly(9).times
         end
 
         it 'commit 2 lint updates' do
@@ -105,9 +105,9 @@ module RubocopPr
 
         subject { described_class.new(['--post-checkout', 'echo 42']) }
 
-        it 'run post_checkout checkout on the start&finish + 2 for todo file + 2 for lints + 2 for the new branch' do
+        it 'run post_checkout checkout on the finish + 3 for todo file + 3 for lints + 2 for the new branch' do
           subject.run!
-          expect(subject.git).to have_received(:exec_post_checkout).exactly(8).times
+          expect(subject.git).to have_received(:exec_post_checkout).exactly(9).times
         end
       end
     end
