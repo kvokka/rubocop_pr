@@ -25,7 +25,7 @@ module RubocopPr
       rubocop.each do |cop|
         break if options.limit <= 0
 
-        ProcessCop.new(git: git, repository: repository, cop: cop, options: options).call
+        next unless ProcessCop.new(git: git, repository: repository, cop: cop, options: options).call
         options.limit -= 1
       end
     end
