@@ -63,7 +63,7 @@ Usage: rubocop_pr [options]
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/rubocop_pr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant][contributor_covenant_link] code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/kvokka/rubocop_pr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant][contributor_covenant_link] code of conduct.
 
 ## License
 
