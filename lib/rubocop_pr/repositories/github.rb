@@ -82,12 +82,17 @@ module RubocopPr
           super
           @assignees = Array opt[:pull_request_assignees]
           @labels = Array opt[:pull_request_labels]
+          @reviewers = Array opt[:pull_request_reviewers]
         end
 
         private
 
         def command
           'hub pull-request create'
+        end
+
+        def cli_options
+          [super, @reviewers.join(',')].reject(&:empty?).join(' ')
         end
       end
 

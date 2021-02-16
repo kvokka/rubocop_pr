@@ -38,7 +38,7 @@ Or install it yourself as:
 
 ```bash
 Usage: rubocop_pr [options]
-    -r, --post-checkout [command]    Running after each git checkout (default: "")
+    -k, --post-checkout [command]    Running after each git checkout (default: "")
     -c, --continue                   Continue previous session (default: false)
     -b, --branch [branch]            internal branch with '.rubocop_todo.yml' (default: 'rubocop_todo_branch')
     -m, --master [branch]            branch which will be the base for all PR's (default: 'master')
@@ -51,6 +51,8 @@ Usage: rubocop_pr [options]
     -a, --issue-assignees [name]     Issue assignees, separated by comma  (default: "")
     -t [name],                       Pull request assignees, separated by comma (default: "")
         --pull-request-assignees
+    -r [name],                       Pull request reviewers, separated by comma (default: "")
+        --pull-request-reviewers
     -g, --repository [name]          Set repository host (default: github)
     -l, --limit [limit]              Limit the PS's for one run (default: 10)
     -h, --help                       Display help

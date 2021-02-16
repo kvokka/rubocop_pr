@@ -40,7 +40,7 @@ module RubocopPr
     def add_post_checkout_option
       @options.post_checkout = ''
       msg = 'Running after each git checkout (default: "")'
-      opts.on('-r [command]', '--post-checkout [command]', String, msg) do |v|
+      opts.on('-k [command]', '--post-checkout [command]', String, msg) do |v|
         @options.post_checkout = v
       end
     end
@@ -106,6 +106,14 @@ module RubocopPr
       msg = 'Pull request assignees, separated by comma (default: "")'
       opts.on('-t [name] ', '--pull-request-assignees [name]', Array, msg) do |v|
         @options.pull_request_assignees = v
+      end
+    end
+
+    def add_pull_request_reviewers_option
+      @options.pull_request_reviewers = []
+      msg = 'Pull request reviewers, separated by comma (default: "")'
+      opts.on('-r [name] ', '--pull-request-reviewers [name]', Array, msg) do |v|
+        @options.pull_request_reviewers = v
       end
     end
 
