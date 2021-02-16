@@ -44,7 +44,7 @@ module RubocopPr
             opt << "-m '#{body}'" unless body.blank?
             opt << "-a '#{assignees.join(',')}'" unless assignees.blank?
             opt << "-l '#{labels.join(',')}'" unless labels.blank?
-          end.join(' ')
+          end
         end
 
         def default_title
@@ -78,6 +78,8 @@ module RubocopPr
 
       # The representation of the PR
       class PullRequest < Base
+        attr_reader :reviewers
+
         def initialize(cop:, **opt)
           super
           @assignees = Array opt[:pull_request_assignees]
@@ -92,7 +94,9 @@ module RubocopPr
         end
 
         def cli_options
-          [super, @reviewers.join(',')].reject(&:empty?).join(' ')
+          super.tap do |opt|
+            opt << "-r '#{reviewers.join(',')}'" unless reviewers.blank?
+          end
         end
       end
 
