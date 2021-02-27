@@ -125,6 +125,13 @@ module RubocopPr
       end
     end
 
+    def add_all_option
+      @options.all = false
+      opts.on('-a', '--all', 'Use -A flag for rubocop command (default: false)') do |_v|
+        @options.all = true
+      end
+    end
+
     def add_continue_option
       @options.continue = false
       opts.on('-c', '--continue', 'Continue previous session (default: false)') do |_v|

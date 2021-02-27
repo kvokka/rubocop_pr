@@ -10,8 +10,8 @@ module RubocopPr
         system 'bundle exec rubocop --auto-gen-config'
       end
 
-      def correct!
-        system 'bundle exec rubocop -a'
+      def correct!(all)
+        system "bundle exec rubocop -#{all ? 'A' : 'a'}"
       end
     end
 

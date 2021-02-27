@@ -27,7 +27,7 @@ module RubocopPr
 
       def exit_early?
         return true if options.continue && cop_was_processed? || git.status.blank?
-        Rubocop.correct!
+        Rubocop.correct!(options[:all])
 
         git.checkout Rubocop::TODO_FILENAME
         git.status.blank?
